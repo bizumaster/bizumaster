@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIZU MASTER</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2R3D803XR7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2R3D803XR7');
+  </script>
+
+  <style>
+    /* ======== ESTILO GERAL ======== */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+    }
+
+    /* Cabeçalho */
+    header {
+      background: #003366;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    /* Menu de navegação */
+    nav {
+      display: flex;
+      background: #0055aa;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: #0055aa;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    nav button:hover {
+      background: #003366;
+    }
+
+    nav button.active {
+      background: #002244;
+      font-weight: bold;
+    }
+
+    /* Conteúdo das abas */
+    .tab-content {
+      padding: 20px;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* iframe */
+    iframe {
+      width: 100%;
+      height: calc(100vh - 150px);
+      border: none;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Responsividade */
+    @media (max-width: 700px) {
+      nav button {
+        flex: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======== CABEÇALHO ======== -->
+  <header>BIZU MASTER</header>
+
+  <!-- ======== MENU ======== -->
+  <nav>
+    <button class="tab-link active" onclick="openTab(event, 'inicio')">Início</button>
+    <button class="tab-link" onclick="openTab(event, 'salario')">Salário</button>
+    <button class="tab-link" onclick="openTab(event, 'transferencia')">Transferência</button>
+    <button class="tab-link" onclick="openTab(event, 'legislacoes')">Legislações</button>
+    <button class="tab-link" onclick="openTab(event, 'sobre')">Sobre</button>
+  </nav>
+
+  <!-- ======== ABA INÍCIO ======== -->
+  <section id="inicio" class="tab-content active">
+    <h2>Bem-vindo ao Bizu Master</h2>
+
+    <p>
+      Este não é um site oficial do Comando da Aeronáutica e pode haver erro no cálculo.
+      O site possui a finalidade de auxiliar os militares a calcular o valor de suas
+      transferências baseados nas legislações que regem essa modalidade.
+    </p>
+  </section>
+
+  <!-- ======== ABA SALÁRIO ======== -->
+  <section id="salario" class="tab-content">
+    <iframe src="./salario.html"></iframe>
+  </section>
+
+  <!-- ======== ABA TRANSFERÊNCIA ======== -->
+  <section id="transferencia" class="tab-content">
+    <iframe src="./transferencia.html"></iframe>
+  </section>
+
+  <!-- ======== ABA LEGISLAÇÕES ======== -->
+  <section id="legislacoes" class="tab-content">
+    <iframe src="./legislacoes.html"></iframe>
+  </section>
+
+  <!-- ======== ABA SOBRE ======== -->
+  <section id="sobre" class="tab-content">
+    <iframe src="./sobre.html"></iframe>
+  </section>
+
+  <!-- ======== SCRIPT DAS ABAS ======== -->
+  <script>
+    function openTab(evt, tabId) {
+
+      document.querySelectorAll(".tab-content").forEach(tab => {
+        tab.classList.remove("active");
+      });
+
+      document.querySelectorAll(".tab-link").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+  </script>
+
+<footer style="margin-top:40px; padding:20px; text-align:center; font-size:14px; border-top:1px solid #ccc;">
+
+<a href="politica-de-privacidade.html">Política de Privacidade</a> |
+<a href="termos-de-uso.html">Termos de Uso</a> |
+<a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a> |
+<a href="contato.html">Contato</a>
+
+<p>© 2026 Bizu Master</p>
+
+</footer>
+
+</body>
+</html>
