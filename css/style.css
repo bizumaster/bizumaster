@@ -6,22 +6,60 @@
   font-family: Arial, sans-serif;
 }
 
-/* ===== CORPO ===== */
+/* ===== ESTRUTURA GERAL ===== */
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
   background-color: #f8f9fa;
   color: #333;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== CABEÇALHO PRINCIPAL ===== */
+header {
+  background: #003366;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5em;
 }
 
 /* ===== MENU SUPERIOR ===== */
 nav {
-  background: #004080;
+  background: #0055aa;
   color: white;
-  padding: 10px 20px;
+  display: flex;
+  flex-wrap: wrap;
   position: relative;
 }
 
-/* Ícone hambúrguer (mobile) */
+/* ===== BOTÕES DO MENU EM ABAS ===== */
+nav button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #0055aa;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+nav button:hover {
+  background: #003366;
+}
+
+nav button.active {
+  background: #002244;
+  font-weight: bold;
+}
+
+/* ===== MENU ANTIGO EM LISTA ===== */
 .menu-toggle {
   display: none;
   font-size: 24px;
@@ -34,12 +72,12 @@ nav {
   top: 12px;
 }
 
-/* Lista do menu */
 nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 nav ul li {
@@ -56,18 +94,26 @@ nav ul li a {
   display: inline-block;
 }
 
-/* Hover no menu */
 nav ul li a:hover {
-  background: #0059b3;
+  background: #003366;
 }
 
-/* Aba ativa */
 nav ul li a.active {
-  background: #0066cc;
+  background: #002244;
   color: #fff;
 }
 
-/* ===== CONTEÚDO ===== */
+/* ===== CONTEÚDO DAS ABAS ===== */
+.tab-content {
+  padding: 20px;
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ===== CONTEÚDO GERAL ===== */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -79,13 +125,18 @@ nav ul li a.active {
   overflow-x: auto;
 }
 
-/* Títulos */
+/* ===== TÍTULOS ===== */
 h1, h2, h3 {
   margin-bottom: 15px;
   color: #004080;
 }
 
-/* ===== BOTÕES ===== */
+/* ===== PARÁGRAFOS E SEÇÕES ===== */
+section p {
+  margin-bottom: 15px;
+}
+
+/* ===== BOTÕES GERAIS ===== */
 button {
   background: #004080;
   color: white;
@@ -102,7 +153,8 @@ button:hover {
 }
 
 /* ===== INPUTS E SELECTS ===== */
-input, select {
+input,
+select {
   display: block;
   width: 100%;
   max-width: 300px;
@@ -116,7 +168,8 @@ input, select {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input:focus {
+input:focus,
+select:focus {
   border-color: #0066cc;
   outline: none;
   box-shadow: 0 0 4px rgba(0, 102, 204, 0.3);
@@ -139,15 +192,76 @@ select:hover {
 }
 
 select:focus {
-  border-color: #0066cc;
   background-color: #fff;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
+/* ===== IFRAME ===== */
+iframe {
+  width: 100%;
+  height: calc(100vh - 150px);
+  border: none;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  margin-top: auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  background: #f8f9fa;
+}
+
+footer a {
+  color: #004080;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  margin-top: 10px;
+}
+
+/* ===== AJUSTES ESPECÍFICOS ===== */
+#opcoesVeiculo label {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+#aviso {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.pagina-texto{
+    max-width:900px;
+    margin:40px auto;
+    line-height:1.6;
+}
+
+
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+  }
+
+  nav button {
+    flex: 100%;
+  }
+
   nav ul {
-    display: none; /* escondido no mobile */
+    display: none;
     flex-direction: column;
     text-align: center;
     background: #004080;
@@ -156,25 +270,18 @@ select:focus {
   }
 
   nav ul.active {
-    display: flex; /* aparece quando o JS ativa */
+    display: flex;
   }
 
   .menu-toggle {
-    display: block; /* mostra o ícone no mobile */
+    display: block;
   }
 
   nav ul li {
     margin: 10px 0;
   }
-}
-/* Mantém Carro e Moto na mesma linha */
-#opcoesVeiculo label {
-  display: inline-block;
-  margin-right: 15px;
-}
-#aviso {
-  color: red;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
+
+  iframe {
+    height: calc(100vh - 190px);
+  }
 }
