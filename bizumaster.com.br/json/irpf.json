@@ -1,0 +1,42 @@
+{
+  "faixas": [
+    {
+      "inicio": 0,
+      "limite": 2428.80,
+      "aliquota": 0,
+      "deducao": 0
+    },
+    {
+      "inicio": 2428.81,
+      "limite": 2826.65,
+      "aliquota": 7.5,
+      "deducao": 182.16
+    },
+    {
+      "inicio": 2826.66,
+      "limite": 3751.05,
+      "aliquota": 15.0,
+      "deducao": 394.16
+    },
+    {
+      "inicio": 3751.06,
+      "limite": 4664.68,
+      "aliquota": 22.5,
+      "deducao": 675.49
+    },
+    {
+      "inicio": 4664.69,
+      "limite": null,
+      "aliquota": 27.5,
+      "deducao": 908.73
+    }
+  ],
+  "redutor_isencao_5000": {
+    "isencao_total_ate": 5000.00,
+    "faixa_reducao_ate": 7350.00,
+    "formula": {
+      "constante": 978.62,
+      "coeficiente_renda": 0.133145
+    }
+  }
+}
