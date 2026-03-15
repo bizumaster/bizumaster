@@ -288,5 +288,24 @@ ${linhasRemuneracao}
 
 }
 
+function compartilharSite() {
+
+  if (navigator.share) {
+
+    navigator.share({
+      title: "BIZU MASTER",
+      text: "Confira esse site que calcula salário e transferência dos militares automaticamente:",
+      url: "https://www.bizumaster.com.br"
+    });
+
+  } else {
+
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copiado! Agora você pode compartilhar.");
+
+  }
+
+}
+
 // Inicializar
 carregarDados();
