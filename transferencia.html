@@ -4,97 +4,126 @@
 <head>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2R3D803XR7"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-2R3D803XR7');
+    gtag('config', 'G-7G25DBR55G');
   </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transferência - Calculadora</title>
 
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 
 </head>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h1>Calculadora de Transferência</h1>
-  </header>
+<body>
 
-  <!-- Conteúdo -->
-  <main>
+<header>BIZU MASTER</header>
 
-    <section>
-      <h2>⚠ Antes de calcular a transferência, preencha o salário na aba “Salário”.</h2>
+<nav>
+  <ul>
+    <li><a href="index.html">Início</a></li>
+    <li><a href="salario.html">Salário</a></li>
+    <li><a href="transferencia.html" class="active">Transferência</a></li>
+    <li><a href="explicacoes.html">Explicações</a></li>
+    <li><a href="legislacoes.html">Legislações</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+  </ul>
+</nav>
 
-      <!-- Formulário -->
-      <form id="formTransferencia">
+<main>
 
-        <!-- Veículo -->
-        <hr style="margin: 20px 0; border: 1px solid #ccc;">
+  <section>
+    <h2>⚠ Antes de calcular a transferência, preencha o salário na aba “Salário”.</h2>
 
-        <label for="veiculo">Vai ser transferido com veículo?</label>
-        <select id="veiculo" required>
+    <form id="formTransferencia">
+
+      <hr class="separador">
+
+      <label for="veiculo">Vai ser transferido com veículo?</label>
+      <select id="veiculo" required>
+        <option value="">Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
+
+      <div id="opcoesVeiculo" style="display: none;">
+        <label for="tipoVeiculo">Tipo de veículo:</label>
+        <select id="tipoVeiculo">
           <option value="">Selecione</option>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
+          <option value="carro">Carro</option>
+          <option value="moto">Moto</option>
+          <option value="carro_moto">Carro e Moto</option>
         </select>
+      </div>
 
-        <!-- Opções adicionais -->
-        <div id="opcoesVeiculo" style="display:none; margin-top:10px;">
-          <label><input type="checkbox" id="carro"> Carro (+12%)</label>
-          <label><input type="checkbox" id="moto"> Moto (+3%)</label>
-        </div>
+      <label for="origem">Localidade de origem:</label>
+      <select id="origem" required>
+        <option value="">Selecione</option>
+      </select>
 
-        <!-- Origem -->
-        <label for="origem">Localidade de origem:</label>
-        <select id="origem" required>
-          <option value="">Selecione</option>
-        </select>
+      <label for="destino">Localidade de destino:</label>
+      <select id="destino" required>
+        <option value="">Selecione</option>
+      </select>
 
-        <!-- Destino -->
-        <label for="destino">Localidade de destino:</label>
-        <select id="destino" required>
-          <option value="">Selecione</option>
-        </select>
+      <label for="dependente">Tem dependente?</label>
+      <select id="dependente" required>
+        <option value="">Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
 
-        <!-- Dependente -->
-        <label for="dependente">Tem dependente?</label>
-        <select id="dependente" required>
-          <option value="">Selecione</option>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
-        </select>
+      <label for="especial">Origem ou destino é Localidade especial?</label>
+      <select id="especial" required>
+        <option value="">Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
 
-        <!-- Localidade especial -->
-        <label for="especial">Origem ou destino é Localidade especial?</label>
-        <select id="especial" required>
-          <option value="">Selecione</option>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
-        </select>
+      <button type="button" id="calcularBtn">Calcular Transferência</button>
 
-        <button type="button" id="calcularBtn">Calcular Transferência</button>
+    </form>
+  </section>
 
-      </form>
+  <section id="resultadoTransferencia" aria-live="polite">
+  </section>
 
-    </section>
+</main>
 
-    <section id="resultadoTransferencia" aria-live="polite" style="margin-top:20px;">
-    </section>
+<footer>
+  <a href="politica-de-privacidade.html">Política de Privacidade</a> |
+  <a href="termos-de-uso.html">Termos de Uso</a> |
+  <a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a> |
+  <a href="contato.html">Contato</a>
 
-  </main>
+  <p>© 2026 Bizu Master. Todos os direitos reservados.</p>
+</footer>
 
-  <!-- Rodapé -->
-  <footer>
-    <p>&copy; 2025 Sistema de Cálculo Militar - Todos os direitos reservados.</p>
-  </footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const veiculoSelect = document.getElementById("veiculo");
+  const opcoesVeiculo = document.getElementById("opcoesVeiculo");
+  const tipoVeiculo = document.getElementById("tipoVeiculo");
 
-<script src="../js/transferencia.js"></script>
+  opcoesVeiculo.style.display = "none";
+
+  veiculoSelect.addEventListener("change", function () {
+    if (this.value === "sim") {
+      opcoesVeiculo.style.display = "block";
+    } else {
+      opcoesVeiculo.style.display = "none";
+      tipoVeiculo.value = "";
+    }
+  });
+});
+</script>
+
+<script src="./js/transferencia.js"></script>
 
 </body>
 </html>

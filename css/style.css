@@ -147,6 +147,11 @@ button {
   transition: background 0.3s, transform 0.2s;
 }
 
+/* espaço abaixo do botão calcular */
+button {
+  margin-bottom: 20px;
+}
+
 button:hover {
   background: #0059b3;
   transform: scale(1.02);
@@ -157,7 +162,7 @@ input,
 select {
   display: block;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -194,6 +199,33 @@ select:hover {
 select:focus {
   background-color: #fff;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+/* ===== ESTILO DA TABELA DE RESULTADO ===== */
+
+table {
+  width: 100%;
+  max-width: 600px;
+  border-collapse: collapse;
+  margin: 15px auto; /* centraliza a tabela */
+  font-size: 15px;
+}
+
+table th,
+table td {
+  padding: 8px 12px;   /* mais espaço interno */
+  border: 1px solid #bbb;
+}
+
+table th {
+  background: #004080;
+  color: white;
+  text-align: center;
+}
+
+table td:last-child {
+  text-align: right;
+  padding-right: 14px; /* espaço extra para números */
 }
 
 /* ===== IFRAME ===== */
@@ -249,6 +281,45 @@ footer p {
     line-height:1.6;
 }
 
+.atalhos-home {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.card-atalho {
+  flex: 1 1 220px;
+  background: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.card-atalho h3 {
+  margin-bottom: 10px;
+  color: #004080;
+}
+
+.card-atalho p {
+  margin: 0;
+  color: #555;
+}
+
+.card-atalho:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-color: #0055aa;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {

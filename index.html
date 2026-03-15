@@ -6,104 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BIZU MASTER</title>
 
+  <link rel="stylesheet" href="./css/style.css">
+
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-7G25DBR55G');
-</script>
-
-  <style>
-    /* ======== ESTILO GERAL ======== */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6f8;
-    }
-
-    /* Cabeçalho */
-    header {
-      background: #003366;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 1.5em;
-    }
-
-    /* Menu de navegação */
-    nav {
-      display: flex;
-      background: #0055aa;
-      flex-wrap: wrap;
-    }
-
-    nav button {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      background: #0055aa;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    nav button:hover {
-      background: #003366;
-    }
-
-    nav button.active {
-      background: #002244;
-      font-weight: bold;
-    }
-
-    /* Conteúdo das abas */
-    .tab-content {
-      padding: 20px;
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* iframe */
-    iframe {
-      width: 100%;
-      height: calc(100vh - 150px);
-      border: none;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    /* Responsividade */
-    @media (max-width: 700px) {
-      nav button {
-        flex: 100%;
-      }
-    }
-  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7G25DBR55G');
+  </script>
 </head>
 
 <body>
 
-  <!-- ======== CABEÇALHO ======== -->
-  <header>BIZU MASTER</header>
+<header>BIZU MASTER</header>
 
-  <!-- ======== MENU ======== -->
-  <nav>
-    <button class="tab-link active" onclick="openTab(event, 'inicio')">Início</button>
-    <button class="tab-link" onclick="openTab(event, 'salario')">Salário</button>
-    <button class="tab-link" onclick="openTab(event, 'transferencia')">Transferência</button>
-    <button class="tab-link" onclick="openTab(event, 'legislacoes')">Legislações</button>
-    <button class="tab-link" onclick="openTab(event, 'sobre')">Sobre</button>
-  </nav>
+<nav>
+  <ul>
+    <li><a href="index.html" class="active">Início</a></li>
+    <li><a href="salario.html">Salário</a></li>
+    <li><a href="transferencia.html">Transferência</a></li>
+    <li><a href="explicacoes.html">Explicações</a></li>
+    <li><a href="legislacoes.html">Legislações</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+  </ul>
+</nav>
 
-  <!-- ======== ABA INÍCIO ======== -->
-  <section id="inicio" class="tab-content active">
+<main>
+  <section>
+
     <h2>Bem-vindo ao Bizu Master</h2>
 
     <p>
@@ -112,57 +44,46 @@
       transferências baseados nas legislações que regem essa modalidade.
     </p>
 
-  </p>
-  Preencha primeiro a aba Salário.
-  </p>
-  
+    <div class="atalhos-home">
+
+      <a href="salario.html" class="card-atalho">
+        <h3>Salário</h3>
+        <p>Calcule soldo, adicionais e descontos.</p>
+      </a>
+
+      <a href="transferencia.html" class="card-atalho">
+        <h3>Transferência</h3>
+        <p>Calcule valores relacionados à transferência.</p>
+      </a>
+
+      <a href="explicacoes.html" class="card-atalho">
+        <h3>Explicações</h3>
+        <p>Entenda como os cálculos do sistema são realizados.</p>
+      </a>
+
+      <a href="legislacoes.html" class="card-atalho">
+        <h3>Legislações</h3>
+        <p>Consulte as normas utilizadas no sistema.</p>
+      </a>
+
+      <a href="sobre.html" class="card-atalho">
+        <h3>Sobre</h3>
+        <p>Saiba mais sobre o sistema e seu objetivo.</p>
+      </a>
+
+    </div>
+
   </section>
+</main>
 
-  <!-- ======== ABA SALÁRIO ======== -->
-  <section id="salario" class="tab-content">
-    <iframe src="./salario.html"></iframe>
-  </section>
+<footer>
 
-  <!-- ======== ABA TRANSFERÊNCIA ======== -->
-  <section id="transferencia" class="tab-content">
-    <iframe src="./transferencia.html"></iframe>
-  </section>
+  <a href="politica-de-privacidade.html">Política de Privacidade</a> |
+  <a href="termos-de-uso.html">Termos de Uso</a> |
+  <a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a> |
+  <a href="contato.html">Contato</a>
 
-  <!-- ======== ABA LEGISLAÇÕES ======== -->
-  <section id="legislacoes" class="tab-content">
-    <iframe src="./legislacoes.html"></iframe>
-  </section>
-
-  <!-- ======== ABA SOBRE ======== -->
-  <section id="sobre" class="tab-content">
-    <iframe src="./sobre.html"></iframe>
-  </section>
-
-  <!-- ======== SCRIPT DAS ABAS ======== -->
-  <script>
-    function openTab(evt, tabId) {
-
-      document.querySelectorAll(".tab-content").forEach(tab => {
-        tab.classList.remove("active");
-      });
-
-      document.querySelectorAll(".tab-link").forEach(btn => {
-        btn.classList.remove("active");
-      });
-
-      document.getElementById(tabId).classList.add("active");
-      evt.currentTarget.classList.add("active");
-    }
-  </script>
-
-<footer style="margin-top:40px; padding:20px; text-align:center; font-size:14px; border-top:1px solid #ccc;">
-
-<a href="politica-de-privacidade.html">Política de Privacidade</a> |
-<a href="termos-de-uso.html">Termos de Uso</a> |
-<a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a> |
-<a href="contato.html">Contato</a>
-
-<p>© 2026 Bizu Master</p>
+  <p>© 2026 Bizu Master. Todos os direitos reservados.</p>
 
 </footer>
 
