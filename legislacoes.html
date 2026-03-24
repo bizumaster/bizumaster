@@ -15,7 +15,6 @@
     gtag('config', 'G-7G25DBR55G');
   </script>
 
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Legislações</title>
@@ -26,20 +25,8 @@
 
 <body>
 
-<header>
-  <a href="index.html" class="logo">BIZU MASTER</a>
-</header>
-
-<nav>
-  <ul>
-    <li><a href="index.html">Início</a></li>
-    <li><a href="salario.html">Salário</a></li>
-    <li><a href="transferencia.html">Transferência</a></li>
-        <li><a href="explicacoes.html">Explicações</a></li>
-    <li><a href="legislacoes.html" class="active">Legislações</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
-  </ul>
-</nav>
+<!-- HEADER DINÂMICO -->
+<div id="header"></div>
 
 <main>
 
@@ -61,20 +48,20 @@
 
 </main>
 
-<footer>
+<!-- FOOTER DINÂMICO -->
+<div id="footer"></div>
 
-<a href="politica-de-privacidade.html">Política de Privacidade</a> |
-<a href="termos-de-uso.html">Termos de Uso</a> |
-<a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a>
+<!-- SCRIPT DO LAYOUT -->
+<script src="/js/layout.js"></script>
 
-<p>
-© 2026 Bizu Master. Todos os direitos reservados.
-  Este site não possui vínculo com o Comando da Aeronáutica.  
-  As informações possuem caráter informativo e os cálculos podem conter imprecisões.
-</p>
-
-</footer>
-
+<!-- Script do dropdown -->
+<script>
+function toggleMenu(event) {
+  event.preventDefault();
+  const dropdown = event.target.closest('.dropdown');
+  dropdown.classList.toggle('active');
+}
+</script>
 
 </body>
 </html>

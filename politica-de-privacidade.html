@@ -14,20 +14,21 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7989785710472721"
      crossorigin="anonymous"></script>
      
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-7G25DBR55G');
-  </script>
-
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-7G25DBR55G');
+</script>
 
 </head>
 <body>
-<header>
-</header>
+
+<!-- HEADER DINÂMICO -->
+<div id="header"></div>
+
 <main>
 
 <section class="pagina-texto">
@@ -69,11 +70,6 @@ Algumas informações podem ser coletadas automaticamente durante a navegação,
 <li>páginas visitadas</li>
 <li>tempo de navegação no site</li>
 </ul>
-
-<p>
-Essas informações são utilizadas apenas para análise de tráfego e melhoria da experiência
-dos visitantes.
-</p>
 
 <h2>Cookies</h2>
 
@@ -143,20 +139,23 @@ através do e-mail: bizumaster2026@gmail.com
 <p><strong>Última atualização:</strong> 14/03/2026</p>
 
 </section>
+
 </main>
-<footer>
 
-<a href="politica-de-privacidade.html">Política de Privacidade</a> |
-<a href="termos-de-uso.html">Termos de Uso</a> |
-<a href="isencao-de-responsabilidade.html">Isenção de Responsabilidade</a>
+<!-- FOOTER DINÂMICO -->
+<div id="footer"></div>
 
-<p>
-© 2026 Bizu Master. Todos os direitos reservados.
-  Este site não possui vínculo com o Comando da Aeronáutica.  
-  As informações possuem caráter informativo e os cálculos podem conter imprecisões.
-</p>
+<!-- SCRIPT DO LAYOUT -->
+<script src="/js/layout.js"></script>
 
-</footer>
+<!-- Script do dropdown -->
+<script>
+function toggleMenu(event) {
+  event.preventDefault();
+  const dropdown = event.target.closest('.dropdown');
+  dropdown.classList.toggle('active');
+}
+</script>
 
 </body>
 </html>
