@@ -575,4 +575,6 @@ a {
     display: block;
   }
 }
-
+main {
+  flex: 1;
+}
