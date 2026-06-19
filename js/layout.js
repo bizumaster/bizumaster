@@ -50,3 +50,24 @@ function setActiveMenu() {
   });
 }
 
+
+// ===== MENU MOBILE =====
+function toggleMenuMobile() {
+  const menu = document.getElementById('navMenu');
+  if (menu) menu.classList.toggle('active');
+}
+
+// ===== DROPDOWN =====
+function toggleMenu(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const dropdown = event.target.closest('.dropdown');
+  if (dropdown) dropdown.classList.toggle('active');
+}
+
+// Fechar dropdown ao clicar fora
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown.active').forEach(d => d.classList.remove('active'));
+  }
+});

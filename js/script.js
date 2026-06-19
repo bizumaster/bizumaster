@@ -53,10 +53,9 @@ async function carregarDados() {
 
 // Preenche selects
 function preencherSelects() {
-    // Ano
+    // Ano fixo em 2026 (campo oculto — reativar quando houver novo ano)
     const anoSelect = document.getElementById("ano");
-    anoSelect.innerHTML = `<option value="">Selecione</option>
-        <option value="2026">2026</option>`;
+    anoSelect.value = "2026";
 
     // Patente
     const patSelect = document.getElementById("patente");
@@ -134,8 +133,8 @@ function calcularSalario() {
     const cotasVooPercent = parseFloat(document.getElementById("cotasVoo").value) || 0;
     const locPercent = parseFloat(document.getElementById("localidade").value) || 0;
 
-    if (!ano || !patente) {
-        alert("Selecione ano e patente.");
+    if (!patente) {
+        alert("Selecione a patente.");
         return;
     }
 

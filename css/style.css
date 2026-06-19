@@ -136,6 +136,21 @@ h3 {
   font-size: 1.15rem;
 }
 
+/* Espaçamento consistente entre seções nas páginas de texto */
+.pagina-texto h2 {
+  margin-top: 36px;
+}
+
+.pagina-texto h3 {
+  margin-top: 24px;
+}
+
+.pagina-texto h1 + h2,
+.pagina-texto h1 + p,
+.pagina-texto > h2:first-of-type {
+  margin-top: 0;
+}
+
 /* ===== PARÁGRAFOS E SEÇÕES ===== */
 section {
   margin-bottom: 28px;
@@ -356,7 +371,7 @@ footer p {
 }
 
 .card-atalho {
-  flex: 1 1 240px;
+  flex: 1 1 160px;
   background: white;
   border: 1px solid #dfe5eb;
   border-radius: 14px;
@@ -537,8 +552,9 @@ a {
   left: 0;
   background: #0a3d73;
   border-radius: 8px;
-  min-width: 220px;
+  min-width: 280px;
   z-index: 1000;
+  white-space: nowrap;
 }
 
 .dropdown-menu li {
@@ -578,3 +594,164 @@ a {
 main {
   flex: 1;
 }
+/* ===== SEPARADOR ===== */
+hr.separador {
+  border: none;
+  border-top: 1px solid #dfe5eb;
+  margin: 24px 0;
+}
+
+/* ===== AVISO DESTAQUE (transferência) ===== */
+.aviso-destaque {
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  color: #5f4000;
+}
+
+.aviso-destaque a {
+  color: #1a73e8;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ===== SEPARADOR ===== */
+hr.separador {
+  border: none;
+  border-top: 1px solid #dfe5eb;
+  margin: 24px 0;
+}
+
+/* ===== AVISO DESTAQUE ===== */
+.aviso-destaque {
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  color: #5f4000;
+}
+
+.aviso-destaque a {
+  color: #1a73e8;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ===== CARDS DE EXPLICAÇÃO ===== */
+.card-explicacao {
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.card-explicacao h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 8px;
+}
+
+.card-explicacao p {
+  margin-bottom: 10px;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.card-explicacao a {
+  color: #1a73e8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card-explicacao a:hover {
+  text-decoration: underline;
+}
+
+/* ===== CAMPO COM DICA (salário) ===== */
+.campo-com-dica {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.campo-com-dica select {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.dica-saiba-mais {
+  font-size: 13px;
+  color: #1a73e8;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dica-saiba-mais:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .campo-com-dica {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .campo-com-dica select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* ===== FORMULÁRIO CENTRALIZADO ===== */
+.form-centralizado {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-centralizado label {
+  display: block;
+}
+
+.form-centralizado input,
+.form-centralizado select {
+  max-width: 100%;
+  width: 100%;
+}
+
+.form-centralizado .campo-com-dica {
+  width: 100%;
+}
+
+.form-centralizado .campo-com-dica select {
+  flex: 1;
+}
+.tabela-hab {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 16px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+    .tabela-hab thead tr { background: #003366; color: #fff; }
+    .tabela-hab th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; }
+    .tabela-hab td { padding: 9px 12px; border-bottom: 1px solid #dfe5eb; vertical-align: top; color: #444; }
+    .tabela-hab tr:last-child td { border-bottom: none; }
+    .tabela-hab .sep td { background: #f4f6f8; font-weight: 600; font-size: 12px; color: #003366; padding: 8px 12px; }
+    .badge-hab { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; white-space: nowrap; }
+    .ae1  { background: #e8f1ff; color: #0b4edb; }
+    .ae2  { background: #ede8ff; color: #4a1fd4; }
+    .aper { background: #e8f7ec; color: #0a7a2f; }
+    .esp  { background: #fff3e0; color: #8a4500; }
+    .form { background: #f1f1f1; color: #444; }

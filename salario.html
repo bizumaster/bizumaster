@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7989785710472721"
-     crossorigin="anonymous"></script>
-     
-  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Salário Militar 2026 | Bizu Master</title>
+  <meta name="description" content="Calcule o salário líquido do militar em 2026. Inclui soldo, adicionais de habilitação, disponibilidade, localidade, compensação orgânica, IRPF e descontos obrigatórios.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bizumaster.com.br/salario.html">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7989785710472721" crossorigin="anonymous"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G25DBR55G"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,28 +17,23 @@
     gtag('js', new Date());
     gtag('config', 'G-7G25DBR55G');
   </script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salário - Calculadora</title>
-
-  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 
-  <!-- HEADER DINÂMICO -->
   <div id="header"></div>
 
   <main>
     <section>
       <h2>Preencha os dados</h2>
 
-      <form id="formSalario">
-        <label for="ano">Ano de Referência:</label>
-        <select id="ano" required>
-          <option value="">Selecione</option>
-          <option value="2026">2026</option>
+      <form id="formSalario" class="form-centralizado">
+
+        <!-- ANO FIXO: oculto enquanto houver apenas um ano disponível.
+             Para reativar, remova o "display:none" do label e do select. -->
+        <label for="ano" style="display:none">Ano de Referência:</label>
+        <select id="ano" required style="display:none">
+          <option value="2026" selected>2026</option>
         </select>
 
         <label for="patente">Patente:</label>
@@ -43,56 +42,55 @@
         </select>
 
         <label for="habilitacao">Adicional de Habilitação:</label>
-        <select id="habilitacao" required>
-          <option value="">Selecione</option>
-        </select>
+        <div class="campo-com-dica">
+          <select id="habilitacao" required>
+            <option value="">Selecione</option>
+          </select>
+          <a href="/blog/adicional-habilitacao.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+        </div>
 
         <label for="localidade">Adicional de Localidade Especial:</label>
-        <select id="localidade" required>
-          <option value="">Selecione</option>
-        </select>
+        <div class="campo-com-dica">
+          <select id="localidade" required>
+            <option value="">Selecione</option>
+          </select>
+          <a href="/blog/adicional-localidade.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+        </div>
 
         <label for="compensacao">Adicional de Compensação Orgânica:</label>
-        <select id="compensacao" required>
-          <option value="">Selecione</option>
-        </select>
+        <div class="campo-com-dica">
+          <select id="compensacao" required>
+            <option value="">Selecione</option>
+          </select>
+          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+        </div>
 
         <label for="compensacaoVoo">Compensação Orgânica de Voo:</label>
-        <select id="compensacaoVoo" required>
-          <option value="">Selecione</option>
-        </select>
+        <div class="campo-com-dica">
+          <select id="compensacaoVoo" required>
+            <option value="">Selecione</option>
+          </select>
+          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+        </div>
 
         <label for="cotasVoo">Cotas de Voo Incorporadas (%):</label>
-        <select id="cotasVoo" required>
-          <option value="">Selecione</option>
-        </select>
+        <div class="campo-com-dica">
+          <select id="cotasVoo" required>
+            <option value="">Selecione</option>
+          </select>
+          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+        </div>
 
         <button type="button" id="btnCalcular">Calcular Salário</button>
       </form>
     </section>
 
-    <section id="resultado" aria-live="polite">
-      <!-- Resultado do cálculo aparece aqui -->
-    </section>
+    <section id="resultado" aria-live="polite"></section>
   </main>
 
-  <!-- FOOTER DINÂMICO -->
   <div id="footer"></div>
-
-  <!-- SCRIPT DO LAYOUT -->
   <script src="/js/layout.js"></script>
-
-  <!-- SCRIPT DA CALCULADORA -->
   <script src="./js/script.js"></script>
-
-  <!-- Script do dropdown -->
-  <script>
-    function toggleMenu(event) {
-      event.preventDefault();
-      const dropdown = event.target.closest('.dropdown');
-      dropdown.classList.toggle('active');
-    }
-  </script>
 
 </body>
 </html>
