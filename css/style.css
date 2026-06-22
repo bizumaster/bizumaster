@@ -735,23 +735,38 @@ hr.separador {
 .form-centralizado .campo-com-dica select {
   flex: 1;
 }
-.tabela-hab {
+.tabela-comparativa-defasagem {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 16px;
+      margin-top: 10px;
+      font-size: 15px;
+      background: white;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
     }
-    .tabela-hab thead tr { background: #003366; color: #fff; }
-    .tabela-hab th { padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px; }
-    .tabela-hab td { padding: 9px 12px; border-bottom: 1px solid #dfe5eb; vertical-align: top; color: #444; }
-    .tabela-hab tr:last-child td { border-bottom: none; }
-    .tabela-hab .sep td { background: #f4f6f8; font-weight: 600; font-size: 12px; color: #003366; padding: 8px 12px; }
-    .badge-hab { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; white-space: nowrap; }
-    .ae1  { background: #e8f1ff; color: #0b4edb; }
-    .ae2  { background: #ede8ff; color: #4a1fd4; }
-    .aper { background: #e8f7ec; color: #0a7a2f; }
-    .esp  { background: #fff3e0; color: #8a4500; }
-    .form { background: #f1f1f1; color: #444; }
+    .tabela-comparativa-defasagem th,
+    .tabela-comparativa-defasagem td {
+      padding: 12px 14px;
+      border: 1px solid #d9dee3;
+      text-align: center;
+    }
+    .tabela-comparativa-defasagem thead th {
+      background: #003366;
+      color: white;
+    }
+    .tabela-comparativa-defasagem td.destaque-sm {
+      background: #8B0000;
+      color: white;
+      font-weight: 700;
+      font-size: 1.05em;
+    }
+    .resumo-defasagem {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #5f4000;
+    }

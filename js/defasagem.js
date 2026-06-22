@@ -1,4 +1,4 @@
-// transferencia.js (ajustado ao HTML atual)
+// defasagem.js — calculadora comparativa de defasagem do transporte de bagagem militar
 
 function formatarMoeda(valor) {
   return Number(valor).toLocaleString("pt-BR", {
@@ -7,8 +7,7 @@ function formatarMoeda(valor) {
   });
 }
 
-// carregar localidades
-async function carregarLocalidades() {
+async function carregarLocalidadesDefasagem() {
   try {
     const response = await fetch("./json/origemedestino.json");
     const dados = await response.json();
@@ -33,17 +32,28 @@ async function carregarLocalidades() {
     });
   } catch (error) {
     console.error("Erro ao carregar origemedestino.json:", error);
-    const resultado = document.getElementById("resultadoTransferencia");
+    const resultado = document.getElementById("resultadoDefasagem");
     if (resultado) {
       resultado.innerHTML = `<div style="color:red">Erro ao carregar localidades. Veja console.</div>`;
     }
   }
 }
 
-async function calcularIndenizacao(event) {
+function buscarValorPorM3(tabela, distancia) {
+  for (const faixa of (tabela || [])) {
+    const min = Number(faixa.min) || 0;
+    const max = faixa.max == null ? Infinity : Number(faixa.max);
+    if (distancia >= min && distancia <= max) {
+      return Number(faixa.valorPorM3) || 0;
+    }
+  }
+  return 0;
+}
+
+async function calcularDefasagem(event) {
   if (event && typeof event.preventDefault === "function") event.preventDefault();
 
-  const resultadoDiv = document.getElementById("resultadoTransferencia");
+  const resultadoDiv = document.getElementById("resultadoDefasagem");
   if (resultadoDiv) resultadoDiv.innerHTML = "";
 
   const normalize = s => (s || "").toString().normalize
@@ -75,61 +85,54 @@ async function calcularIndenizacao(event) {
     const veiculoResposta = document.getElementById("veiculo")?.value || "";
     const tipoVeiculo = document.getElementById("tipoVeiculo")?.value || "";
 
-    // lê o valor do adicional de localidade (padrão 0 se não existir)
     const valorLocalidadeStored = localStorage.getItem("valorLocalidade");
     const valorLocalidade = (() => {
       const texto = (valorLocalidadeStored || "0").toString().trim();
-
       let n = Number(texto);
       if (Number.isFinite(n)) return n;
-
       n = Number(texto.replace(/\./g, "").replace(",", "."));
       return Number.isFinite(n) ? n : 0;
     })();
 
-    // remuneração usada exclusivamente no cálculo da ajuda de custo
     const remuneracaoParaAjuda = Math.max(0, remuneracaoBruta - valorLocalidade);
 
     if (!origemRaw || !destinoRaw || !patenteRaw || Number.isNaN(remuneracaoBruta)) {
-      const msg = "Preencha a aba Salário antes de calcular a transferência.";
-      if (resultadoDiv) {
-        resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
-      }
+      const msg = "Preencha a aba Salário antes de calcular a defasagem.";
+      if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
       console.warn(msg);
       return;
     }
 
     if (!veiculoResposta) {
       const msg = "Selecione se haverá veículo na transferência.";
-      if (resultadoDiv) {
-        resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
-      }
+      if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
       return;
     }
 
     if (veiculoResposta === "sim" && !tipoVeiculo) {
       const msg = "Selecione o tipo de veículo.";
-      if (resultadoDiv) {
-        resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
-      }
+      if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
       return;
     }
 
-    // carregar JSONs
-    const [distJSON, valorJSON, transitoJSON, cubagemJSON, ajudaJSON] = await Promise.all([
+    const [
+      distJSON, valorAtualJSON, valorIPCAJSON, valorSMJSON,
+      transitoJSON, cubagemJSON, ajudaJSON
+    ] = await Promise.all([
       fetch("./json/distancia.json").then(r => r.json()),
       fetch("./json/valorpordistancia.json").then(r => r.json()),
+      fetch("./json/valorpordistanciaIPCA.json").then(r => r.json()),
+      fetch("./json/valorpordistanciaSM.json").then(r => r.json()),
       fetch("./json/transito.json").then(r => r.json()),
       fetch("./json/cubagem.json").then(r => r.json()),
       fetch("./json/ajudadecusto.json").then(r => r.json())
     ]);
 
-    // encontrar chaves de origem/destino tolerantes
     const origemKey = findKeyInsensitive(distJSON, origemRaw);
     if (!origemKey) {
-      const msg = `Origem "${origemRaw}" não encontrada em distancia.json (verifique nomes).`;
+      const msg = `Origem "${origemRaw}" não encontrada em distancia.json.`;
       if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:red">${msg}</div>`;
-      console.warn(msg, "Chaves disponíveis:", Object.keys(distJSON || {}).slice(0, 10));
+      console.warn(msg);
       return;
     }
 
@@ -138,13 +141,13 @@ async function calcularIndenizacao(event) {
     if (!destinoKey) {
       const msg = `Destino "${destinoRaw}" não encontrado em distancia.json para a origem "${origemKey}".`;
       if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:red">${msg}</div>`;
-      console.warn(msg, "Chaves disponíveis para origem:", Object.keys(destinoObj || {}).slice(0, 10));
+      console.warn(msg);
       return;
     }
 
     const distancia = Number(destinoObj[destinoKey]);
     if (Number.isNaN(distancia)) {
-      const msg = `Distância inválida entre ${origemKey} → ${destinoKey}: ${destinoObj[destinoKey]}`;
+      const msg = `Distância inválida entre ${origemKey} → ${destinoKey}.`;
       if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:red">${msg}</div>`;
       console.error(msg);
       return;
@@ -161,16 +164,10 @@ async function calcularIndenizacao(event) {
       }
     }
 
-    // valor por m³
-    let valorPorM3 = 0;
-    for (const faixa of (valorJSON || [])) {
-      const min = Number(faixa.min) || 0;
-      const max = faixa.max == null ? Infinity : Number(faixa.max);
-      if (distancia >= min && distancia <= max) {
-        valorPorM3 = Number(faixa.valorPorM3) || 0;
-        break;
-      }
-    }
+    // valores por m³ nas 3 tabelas
+    const valorAtual = buscarValorPorM3(valorAtualJSON, distancia);
+    const valorIPCA = buscarValorPorM3(valorIPCAJSON, distancia);
+    const valorSM = buscarValorPorM3(valorSMJSON, distancia);
 
     // cubagem
     const patenteKey = findKeyInsensitive(cubagemJSON, patenteRaw);
@@ -179,37 +176,28 @@ async function calcularIndenizacao(event) {
 
     if (!patenteKey) {
       mensagens.push(`Patente "${patenteRaw}" não encontrada em cubagem.json.`);
-      console.warn(mensagens[mensagens.length - 1]);
     } else {
       cubagemBase = Number(cubagemJSON[patenteKey]) || 0;
     }
 
-    // multiplicador do veículo
     let multiplicadorVeiculo = 1;
-
     if (veiculoResposta === "sim") {
-      if (tipoVeiculo === "carro") {
-        multiplicadorVeiculo += 0.12;
-      } else if (tipoVeiculo === "moto") {
-        multiplicadorVeiculo += 0.03;
-      } else if (tipoVeiculo === "carro_moto") {
-        multiplicadorVeiculo += 0.15;
-      }
+      if (tipoVeiculo === "carro") multiplicadorVeiculo += 0.12;
+      else if (tipoVeiculo === "moto") multiplicadorVeiculo += 0.03;
+      else if (tipoVeiculo === "carro_moto") multiplicadorVeiculo += 0.15;
     }
 
     const cubagemAjustada = cubagemBase * multiplicadorVeiculo;
-
-    if (valorPorM3 === 0) {
-      mensagens.push(`Nenhum valor encontrado em valorpordistancia.json para ${distancia} km. Usando 0.`);
-    }
 
     if (cubagemBase === 0) {
       mensagens.push(`Cubagem base igual a 0 para a patente. Resultado pode ser 0.`);
     }
 
-    const transporteBagagem = Number(cubagemAjustada || 0) * Number(valorPorM3 || 0);
+    const transporteAtual = cubagemAjustada * valorAtual;
+    const transporteIPCA = cubagemAjustada * valorIPCA;
+    const transporteSM = cubagemAjustada * valorSM;
 
-    // ajuda de custo
+    // ajuda de custo (referência, não corrigida — não vem da tabela do decreto)
     const dependenteVal = document.getElementById("dependente")?.value;
     const especialVal = document.getElementById("especial")?.value;
     const dependente = dependenteVal === "sim";
@@ -224,27 +212,22 @@ async function calcularIndenizacao(event) {
     }
 
     const ajudaDeCusto = Number(remuneracaoParaAjuda || 0) * multiplicadorAjuda;
-    const total = transporteBagagem + ajudaDeCusto;
 
-    console.log("DEBUG_TRANSFERENCIA", {
-      origemRaw,
-      origemKey,
-      destinoRaw,
-      destinoKey,
-      distancia,
-      diasTransito,
-      valorPorM3,
-      patenteRaw,
-      patenteKey,
-      cubagemBase,
-      veiculoResposta,
-      tipoVeiculo,
-      multiplicadorVeiculo,
-      cubagemAjustada,
-      transporteBagagem,
-      multiplicadorAjuda,
-      ajudaDeCusto,
-      total
+    const totalAtual = transporteAtual + ajudaDeCusto;
+    const totalIPCA = transporteIPCA + ajudaDeCusto;
+    const totalSM = transporteSM + ajudaDeCusto;
+
+    const diferencaSM = transporteSM - transporteAtual;
+    const percentualSM = transporteAtual > 0
+      ? ((transporteSM / transporteAtual - 1) * 100)
+      : 0;
+
+    console.log("DEBUG_DEFASAGEM", {
+      origemKey, destinoKey, distancia, diasTransito,
+      valorAtual, valorIPCA, valorSM,
+      cubagemBase, cubagemAjustada,
+      transporteAtual, transporteIPCA, transporteSM,
+      ajudaDeCusto, totalAtual, totalIPCA, totalSM
     });
 
     if (resultadoDiv) {
@@ -255,41 +238,67 @@ async function calcularIndenizacao(event) {
 
       resultadoDiv.innerHTML = `
         ${avisosHTML}
-        <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;">
+
+        <table class="tabela-comparativa-defasagem">
           <thead>
-            <tr style="background:#004080; color:white;">
-              <th colspan="2">Resumo da Transferência</th>
+            <tr>
+              <th>Transporte de Bagagem (${cubagemAjustada.toFixed(1)} m³ — ${distancia} km)</th>
+              <th>Tabela de 2002 (atual)</th>
+              <th>Corrigido pelo IPCA</th>
+              <th>Corrigido pelo Salário Mínimo</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>Dias de Trânsito</td><td>${diasTransito}</td></tr>
-            <tr><td>Transporte de Bagagem</td><td>R$ ${formatarMoeda(transporteBagagem)}</td></tr>
-            <tr><td>Ajuda de Custo</td><td>R$ ${formatarMoeda(ajudaDeCusto)}</td></tr>
-            <tr style="background:#006400; color:white; font-weight:bold;">
+            <tr>
+              <td>Valor a receber</td>
+              <td>R$ ${formatarMoeda(transporteAtual)}</td>
+              <td>R$ ${formatarMoeda(transporteIPCA)}</td>
+              <td class="destaque-sm">R$ ${formatarMoeda(transporteSM)}</td>
+            </tr>
+
+            <tr class="linha-secao">
+              <td colspan="4">Demais itens da transferência (não afetados pelo decreto de 2002)</td>
+            </tr>
+
+            <tr>
+              <td>Dias de Trânsito</td>
+              <td colspan="3" class="valor-unico">${diasTransito}</td>
+            </tr>
+            <tr>
+              <td>Ajuda de Custo (referência)</td>
+              <td colspan="3" class="valor-unico">R$ ${formatarMoeda(ajudaDeCusto)}</td>
+            </tr>
+
+            <tr class="linha-total">
               <td>Total da Transferência</td>
-              <td>R$ ${formatarMoeda(total)}</td>
+              <td>R$ ${formatarMoeda(totalAtual)}</td>
+              <td>R$ ${formatarMoeda(totalIPCA)}</td>
+              <td class="destaque-sm">R$ ${formatarMoeda(totalSM)}</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="aviso-destaque" style="margin-top:18px; border-left-color:#d93025; background:#fdeaea; color:#7a0d0d;">
-          <strong>&#9888; Esse valor de transporte de bagagem não é atualizado desde 2002.</strong>
-          Clique aqui para saber quanto você receberia se ele fosse corrigido pela inflação
-          ou pelo salário mínimo:
-          <a href="/defasagem.html">Ver valores atualizados →</a>
+        <div class="resumo-defasagem">
+          <p>
+            Se a tabela do transporte de bagagem (Anexo V do Decreto nº 4.307/2002) tivesse
+            sido corrigida pelo salário mínimo desde 2002, você receberia
+            <strong>R$ ${formatarMoeda(diferencaSM)}</strong> a mais nesta transferência —
+            um valor <strong>${percentualSM.toFixed(0)}% maior</strong> do que o pago hoje.
+          </p>
         </div>
       `;
     }
   } catch (error) {
-    console.error("Erro ao calcular transferência:", error);
+    console.error("Erro ao calcular defasagem:", error);
+    const resultadoDiv = document.getElementById("resultadoDefasagem");
     if (resultadoDiv) {
-      resultadoDiv.innerHTML = `<div style="color:red">Erro ao calcular transferência. Veja console para detalhes.</div>`;
+      resultadoDiv.innerHTML = `<div style="color:red">Erro ao calcular. Veja console para detalhes.</div>`;
     }
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  carregarLocalidades();
+  carregarLocalidadesDefasagem();
 
   const veiculoEl = document.getElementById("veiculo");
   const opcoesVeiculo = document.getElementById("opcoesVeiculo");
@@ -308,8 +317,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const calcularBtn = document.getElementById("calcularBtn");
+  const calcularBtn = document.getElementById("calcularDefasagemBtn");
   if (calcularBtn) {
-    calcularBtn.addEventListener("click", calcularIndenizacao);
+    calcularBtn.addEventListener("click", calcularDefasagem);
   }
 });
