@@ -1,4 +1,24 @@
 // defasagem.js — calculadora comparativa de defasagem do transporte de bagagem militar
+//
+// Assim como na aba Transferência, esta página agora tem seus próprios campos
+// de Patente, Habilitação, Localidade, Compensação Orgânica, Compensação de Voo
+// e Cotas de Voo. A remuneração usada na ajuda de custo (referência) é sempre
+// recalculada ao vivo, com base no que está selecionado nesta própria página.
+//
+// Se o usuário já calculou o salário na aba Salário antes, esses campos vêm
+// pré-preenchidos (lidos de sessionStorage) só para poupar trabalho. Ele pode
+// alterar qualquer um deles aqui sem afetar a aba Salário.
+
+const ANO_REFERENCIA = "2026";
+const CHAVE_RASCUNHO_SALARIO = "rascunhoSalario";
+
+let soldos = {};
+let habilitacaoDados = {};
+let disponibilidade = {};
+let ativa = {};
+let compensacaoPercentuais = {};
+let localidadePercentuais = {};
+let patentesLista = [];
 
 function formatarMoeda(valor) {
   return Number(valor).toLocaleString("pt-BR", {
@@ -39,6 +59,115 @@ async function carregarLocalidadesDefasagem() {
   }
 }
 
+// ===== Carregar dados de salário e preencher os selects desta página =====
+async function carregarDadosSalario() {
+  const [s, h, d, a, c, l, pat] = await Promise.all([
+    fetch("./json/soldo.json").then(r => r.json()),
+    fetch("./json/habilitacao.json").then(r => r.json()),
+    fetch("./json/disponibilidade.json").then(r => r.json()),
+    fetch("./json/ativa.json").then(r => r.json()),
+    fetch("./json/compensacao.json").then(r => r.json()),
+    fetch("./json/localidade.json").then(r => r.json()),
+    fetch("./json/patentes.json").then(r => r.json())
+  ]);
+
+  soldos = s;
+  habilitacaoDados = h;
+  disponibilidade = d;
+  ativa = a;
+  compensacaoPercentuais = c;
+  localidadePercentuais = l;
+  patentesLista = pat.patentes;
+
+  preencherSelectsSalario();
+  aplicarRascunhoSalario();
+}
+
+function preencherSelectsSalario() {
+  // Patente
+  const patSelect = document.getElementById("patente");
+  patSelect.innerHTML = `<option value="">Selecione</option>`;
+  patentesLista.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = p;
+    patSelect.appendChild(opt);
+  });
+
+  // Habilitação
+  const habSelect = document.getElementById("habilitacao");
+  habSelect.innerHTML = `<option value="">Selecione</option>`;
+  Object.keys(habilitacaoDados).forEach(nivel => {
+    Object.keys(habilitacaoDados[nivel]).forEach(sub => {
+      const percent = habilitacaoDados[nivel][sub];
+      const opt = document.createElement("option");
+      opt.value = percent;
+      opt.textContent = `${nivel} - ${sub} (${percent}%)`;
+      habSelect.appendChild(opt);
+    });
+  });
+
+  // Localidade especial
+  const locSelect = document.getElementById("localidade");
+  locSelect.innerHTML = `<option value="">Selecione</option>`;
+  localidadePercentuais.percentuais.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = `${p}%`;
+    locSelect.appendChild(opt);
+  });
+
+  // Compensação orgânica
+  const compSelect = document.getElementById("compensacao");
+  compSelect.innerHTML = `<option value="">Selecione</option>`;
+  compensacaoPercentuais.percentuais.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = `${p}%`;
+    compSelect.appendChild(opt);
+  });
+
+  // Compensação orgânica de voo
+  const compVooSelect = document.getElementById("compensacaoVoo");
+  compVooSelect.innerHTML = `<option value="">Selecione</option>`;
+  compensacaoPercentuais.percentuais.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = `${p}%`;
+    compVooSelect.appendChild(opt);
+  });
+
+  // Cotas de voo incorporadas
+  const cotasSelect = document.getElementById("cotasVoo");
+  cotasSelect.innerHTML = `<option value="">Selecione</option>`;
+  compensacaoPercentuais.percentuais.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p;
+    opt.textContent = `${p}%`;
+    cotasSelect.appendChild(opt);
+  });
+}
+
+// Se existir um rascunho salvo pela aba Salário (sessionStorage), pré-preenche
+// os campos desta página. O usuário pode mudar qualquer um deles livremente.
+function aplicarRascunhoSalario() {
+  let rascunho;
+  try {
+    rascunho = JSON.parse(sessionStorage.getItem(CHAVE_RASCUNHO_SALARIO) || "null");
+  } catch (e) {
+    rascunho = null;
+  }
+  if (!rascunho) return;
+
+  ["patente", "habilitacao", "localidade", "compensacao", "compensacaoVoo", "cotasVoo"].forEach(campo => {
+    const valor = rascunho[campo];
+    const select = document.getElementById(campo);
+    if (select && valor !== undefined && valor !== null && valor !== "") {
+      select.value = valor;
+    }
+  });
+}
+
 function buscarValorPorM3(tabela, distancia) {
   for (const faixa of (tabela || [])) {
     const min = Number(faixa.min) || 0;
@@ -77,29 +206,28 @@ async function calcularDefasagem(event) {
   };
 
   try {
+    const patenteRaw = document.getElementById("patente")?.value;
+    const habPercent = parseFloat(document.getElementById("habilitacao")?.value) || 0;
+    const locPercent = parseFloat(document.getElementById("localidade")?.value) || 0;
+    const compPercent = parseFloat(document.getElementById("compensacao")?.value) || 0;
+    const compVooPercent = parseFloat(document.getElementById("compensacaoVoo")?.value) || 0;
+    const cotasVooPercent = parseFloat(document.getElementById("cotasVoo")?.value) || 0;
+
     const origemRaw = document.getElementById("origem")?.value;
     const destinoRaw = document.getElementById("destino")?.value;
-    const patenteRaw = localStorage.getItem("patenteSelecionada");
-    const remuneracaoBruta = Number(localStorage.getItem("remuneracaoBruta"));
 
     const veiculoResposta = document.getElementById("veiculo")?.value || "";
     const tipoVeiculo = document.getElementById("tipoVeiculo")?.value || "";
 
-    const valorLocalidadeStored = localStorage.getItem("valorLocalidade");
-    const valorLocalidade = (() => {
-      const texto = (valorLocalidadeStored || "0").toString().trim();
-      let n = Number(texto);
-      if (Number.isFinite(n)) return n;
-      n = Number(texto.replace(/\./g, "").replace(",", "."));
-      return Number.isFinite(n) ? n : 0;
-    })();
-
-    const remuneracaoParaAjuda = Math.max(0, remuneracaoBruta - valorLocalidade);
-
-    if (!origemRaw || !destinoRaw || !patenteRaw || Number.isNaN(remuneracaoBruta)) {
-      const msg = "Preencha a aba Salário antes de calcular a defasagem.";
+    if (!patenteRaw) {
+      const msg = "Selecione a patente.";
       if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
-      console.warn(msg);
+      return;
+    }
+
+    if (!origemRaw || !destinoRaw) {
+      const msg = "Selecione a origem e o destino.";
+      if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
       return;
     }
 
@@ -114,6 +242,33 @@ async function calcularDefasagem(event) {
       if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
       return;
     }
+
+    const dependenteVal = document.getElementById("dependente")?.value;
+    const especialVal = document.getElementById("especial")?.value;
+
+    if (!dependenteVal || !especialVal) {
+      const msg = "Responda se há dependente e se a origem/destino é localidade especial.";
+      if (resultadoDiv) resultadoDiv.innerHTML = `<div style="color:darkorange">${msg}</div>`;
+      return;
+    }
+
+    // ----- Recalcula a remuneração AO VIVO, com base nesta própria página -----
+    const soldo = soldos[ANO_REFERENCIA][patenteRaw];
+    const valorAtiva = (ativa[patenteRaw] / 100) * soldo;
+    const valorDisponibilidade = (disponibilidade[patenteRaw] / 100) * soldo;
+    const valorHabilitacao = (habPercent / 100) * soldo;
+    const valorCompensacao = (compPercent / 100) * soldo;
+    const valorCompensacaoVoo = (compVooPercent / 100) * soldo;
+    const valorCotasVoo = (cotasVooPercent / 100) * soldo;
+    const valorLocalidade = (locPercent / 100) * soldo;
+
+    const remuneracaoBruta =
+      soldo + valorAtiva + valorDisponibilidade + valorHabilitacao +
+      valorCompensacao + valorCompensacaoVoo + valorCotasVoo + valorLocalidade;
+
+    // Remuneração usada exclusivamente como referência da ajuda de custo
+    // (exclui o Adicional de Localidade Especial, como já era feito antes)
+    const remuneracaoParaAjuda = Math.max(0, remuneracaoBruta - valorLocalidade);
 
     const [
       distJSON, valorAtualJSON, valorIPCAJSON, valorSMJSON,
@@ -170,14 +325,14 @@ async function calcularDefasagem(event) {
     const valorSM = buscarValorPorM3(valorSMJSON, distancia);
 
     // cubagem
-    const patenteKey = findKeyInsensitive(cubagemJSON, patenteRaw);
+    const patenteCubagemKey = findKeyInsensitive(cubagemJSON, patenteRaw);
     let cubagemBase = 0;
     const mensagens = [];
 
-    if (!patenteKey) {
+    if (!patenteCubagemKey) {
       mensagens.push(`Patente "${patenteRaw}" não encontrada em cubagem.json.`);
     } else {
-      cubagemBase = Number(cubagemJSON[patenteKey]) || 0;
+      cubagemBase = Number(cubagemJSON[patenteCubagemKey]) || 0;
     }
 
     let multiplicadorVeiculo = 1;
@@ -198,8 +353,6 @@ async function calcularDefasagem(event) {
     const transporteSM = cubagemAjustada * valorSM;
 
     // ajuda de custo (referência, não corrigida — não vem da tabela do decreto)
-    const dependenteVal = document.getElementById("dependente")?.value;
-    const especialVal = document.getElementById("especial")?.value;
     const dependente = dependenteVal === "sim";
     const especial = especialVal === "sim";
 
@@ -223,6 +376,7 @@ async function calcularDefasagem(event) {
       : 0;
 
     console.log("DEBUG_DEFASAGEM", {
+      patenteRaw, soldo, remuneracaoBruta, remuneracaoParaAjuda,
       origemKey, destinoKey, distancia, diasTransito,
       valorAtual, valorIPCA, valorSM,
       cubagemBase, cubagemAjustada,
@@ -261,6 +415,10 @@ async function calcularDefasagem(event) {
             </tr>
 
             <tr>
+              <td>Remuneração considerada (sem localidade)</td>
+              <td colspan="3" class="valor-unico">R$ ${formatarMoeda(remuneracaoParaAjuda)}</td>
+            </tr>
+            <tr>
               <td>Dias de Trânsito</td>
               <td colspan="3" class="valor-unico">${diasTransito}</td>
             </tr>
@@ -290,15 +448,21 @@ async function calcularDefasagem(event) {
     }
   } catch (error) {
     console.error("Erro ao calcular defasagem:", error);
-    const resultadoDiv = document.getElementById("resultadoDefasagem");
-    if (resultadoDiv) {
-      resultadoDiv.innerHTML = `<div style="color:red">Erro ao calcular. Veja console para detalhes.</div>`;
+    const resultadoDiv2 = document.getElementById("resultadoDefasagem");
+    if (resultadoDiv2) {
+      resultadoDiv2.innerHTML = `<div style="color:red">Erro ao calcular. Veja console para detalhes.</div>`;
     }
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   carregarLocalidadesDefasagem();
+
+  try {
+    await carregarDadosSalario();
+  } catch (error) {
+    console.error("Erro ao carregar JSONs de salário:", error);
+  }
 
   const veiculoEl = document.getElementById("veiculo");
   const opcoesVeiculo = document.getElementById("opcoesVeiculo");

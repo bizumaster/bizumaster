@@ -25,9 +25,9 @@
 
   <main>
     <section>
-      <h2>Preencha os dados</h2>
+      <h2>Calculadora de salário</h2>
 
-      <form id="formSalario" class="form-centralizado">
+      <div id="formSalario" class="form-centralizado">
 
         <!-- ANO FIXO: oculto enquanto houver apenas um ano disponível.
              Para reativar, remova o "display:none" do label e do select. -->
@@ -62,7 +62,7 @@
           <select id="compensacao" required>
             <option value="">Selecione</option>
           </select>
-          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+          <a href="/blog/compensacao-organica.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
         </div>
 
         <label for="compensacaoVoo">Compensação Orgânica de Voo:</label>
@@ -70,7 +70,7 @@
           <select id="compensacaoVoo" required>
             <option value="">Selecione</option>
           </select>
-          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+          <a href="/blog/compensacao-organica-voo.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
         </div>
 
         <label for="cotasVoo">Cotas de Voo Incorporadas (%):</label>
@@ -78,11 +78,11 @@
           <select id="cotasVoo" required>
             <option value="">Selecione</option>
           </select>
-          <a href="/explicacoes.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
+          <a href="/blog/cotas-de-voo.html" class="dica-saiba-mais" target="_blank">Saiba mais →</a>
         </div>
 
         <button type="button" id="btnCalcular">Calcular Salário</button>
-      </form>
+      </div>
     </section>
 
     <section id="resultado" aria-live="polite"></section>

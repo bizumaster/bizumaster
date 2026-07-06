@@ -151,12 +151,25 @@ function calcularSalario() {
 
     // Total remuneração (bruta)
 const remuneracaoTotal = soldo + valorAtiva + valorDisponibilidade + valorHabilitacao + valorCompensacao + valorCompensacaoVoo + valorCotasVoo + valorLocalidade;
-// --- ADICIONAL: grava o valor (R$) do adicional de localidade — não altera nenhum cálculo ---
-localStorage.setItem("valorLocalidade", String(valorLocalidade));
 
-// 🔹 Salvar no localStorage
-localStorage.setItem("patenteSelecionada", patente);
-localStorage.setItem("remuneracaoBruta", String(remuneracaoTotal));
+// 🔹 Salva um rascunho com as seleções desta página em sessionStorage.
+// A aba Transferência usa esse rascunho só para PRÉ-PREENCHER seus próprios
+// campos (ela recalcula tudo ao vivo, com base no que estiver selecionada lá).
+// Por ser sessionStorage (não localStorage), o rascunho some ao fechar a
+// aba/navegador, evitando que dados antigos de outra visita sejam reutilizados
+// sem o usuário perceber.
+try {
+    sessionStorage.setItem("rascunhoSalario", JSON.stringify({
+        patente: patente,
+        habilitacao: habPercent,
+        localidade: locPercent,
+        compensacao: compPercent,
+        compensacaoVoo: compVooPercent,
+        cotasVoo: cotasVooPercent
+    }));
+} catch (e) {
+    console.warn("Não foi possível salvar o rascunho do salário:", e);
+}
 
 // Base de cálculo dos descontos
 const baseDescontos =
@@ -227,7 +240,7 @@ const itensRemuneracao = [
     { nome: `Adicional Habilitação (${habPercent}%)`, valor: valorHabilitacao },
     { nome: `Adicional Compensação Orgânica (${compPercent}%)`, valor: valorCompensacao },
     { nome: `Compensação Orgânica de Voo (${compVooPercent}%)`, valor: valorCompensacaoVoo },
-    { name: `Cotas de Voo (${cotasVooPercent}%)`, valor: valorCotasVoo },
+    { nome: `Cotas de Voo (${cotasVooPercent}%)`, valor: valorCotasVoo },
     { nome: `Adicional Localidade Especial (${locPercent}%)`, valor: valorLocalidade }
 ];
 
@@ -237,10 +250,9 @@ itensRemuneracao.sort((a, b) => b.valor - a.valor);
 // Monta as linhas da parte da remuneração
 let linhasRemuneracao = "";
 itensRemuneracao.forEach(item => {
-    const nomeItem = item.nome || item.name;
     linhasRemuneracao += `
     <tr>
-        <td>${nomeItem}</td>
+        <td>${item.nome}</td>
         <td>R$ ${formatarMoeda(item.valor)}</td>
     </tr>
     `;

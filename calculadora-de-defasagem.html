@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <title>Calculadora de Transferência Militar | Bizu Master</title>
-  <meta name="description" content="Calcule as indenizações de transferência militar: ajuda de custo, transporte de bagagem, cubagem e dias de trânsito conforme a legislação da Aeronáutica.">
+  <title>Calculadora de Defasagem do Transporte de Bagagem Militar | Bizu Master</title>
+  <meta name="description" content="Compare o valor do transporte de bagagem militar pago hoje (tabela de 2002) com o valor corrigido pelo IPCA e pelo salário mínimo para a sua transferência.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://bizumaster.com.br/transferencia.html">
+  <link rel="canonical" href="https://bizumaster.com.br/calculadora-de-defasagem.html">
   <link rel="stylesheet" href="./css/style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7989785710472721"
      crossorigin="anonymous"></script>
@@ -20,18 +19,23 @@
     gtag('config', 'G-7G25DBR55G');
   </script>
 </head>
-
 <body>
 
-<!-- HEADER DINÂMICO -->
 <div id="header"></div>
 
 <main>
 
   <section>
-      <h2>Calculadora de transferência</h2>
 
-    <div id="formTransferencia" class="form-centralizado">
+    <div class="aviso-destaque">
+      <strong>📖 Quer entender o tema?</strong> Leia
+      <a href="/blog/defasagem-de-transferencia.html">por que o transporte de bagagem militar está defasado</a>
+      antes de comparar os valores abaixo.
+    </div>
+
+    <h2>Calculadora de Defasagem do Transporte de Bagagem</h2>
+
+    <div id="formDefasagem" class="form-centralizado">
 
       <label for="patente">Patente:</label>
       <select id="patente">
@@ -121,45 +125,28 @@
         <option value="nao">Não</option>
       </select>
 
-      <button type="button" id="calcularBtn">Calcular Transferência</button>
+      <button type="button" id="calcularDefasagemBtn">Comparar Valores</button>
 
     </div>
-  </section>
 
-  <section id="resultadoTransferencia" aria-live="polite">
+    <section id="resultadoDefasagem" aria-live="polite"></section>
+
+    <p style="margin-top: 24px;">
+      Os valores corrigidos por IPCA e por salário mínimo são apenas <strong>ilustrativos e
+      comparativos</strong> — não representam direito ou valor que o militar possa pleitear
+      administrativamente. O valor oficial continua sendo o previsto no Decreto nº 4.307/2002,
+      sem correção. Para o cálculo oficial da sua transferência, use a
+      <a href="/transferencia.html">Calculadora de Transferência</a>.
+    </p>
+
   </section>
 
 </main>
 
-<!-- FOOTER DINÂMICO -->
 <div id="footer"></div>
-
-<!-- SCRIPT DO LAYOUT -->
 <script src="/js/layout.js"></script>
 
-<!-- SCRIPT DO DROPDOWN -->
-
-<!-- SCRIPT DA PÁGINA -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const veiculoSelect = document.getElementById("veiculo");
-  const opcoesVeiculo = document.getElementById("opcoesVeiculo");
-  const tipoVeiculo = document.getElementById("tipoVeiculo");
-
-  opcoesVeiculo.style.display = "none";
-
-  veiculoSelect.addEventListener("change", function () {
-    if (this.value === "sim") {
-      opcoesVeiculo.style.display = "block";
-    } else {
-      opcoesVeiculo.style.display = "none";
-      tipoVeiculo.value = "";
-    }
-  });
-});
-</script>
-
-<script src="./js/transferencia.js"></script>
+<script src="./js/defasagem.js"></script>
 
 </body>
 </html>

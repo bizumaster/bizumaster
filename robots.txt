@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bizumaster.com.br/xml/sitemap.xml

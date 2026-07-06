@@ -56,7 +56,7 @@ nav {
   cursor: pointer;
   background: none;
   border: none;
-  color: white;
+  color: #003366;
   position: absolute;
   right: 20px;
   top: 12px;
@@ -95,7 +95,42 @@ nav ul li a.active {
   font-weight: 700;
 }
 
+/* ===== DROPDOWN ===== */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0a3d73;
+  border-radius: 8px;
+  width: max-content; /* expande automaticamente ao maior item, sem cortar texto */
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: #0a84ff;
+}
+
 /* ===== CONTEÚDO GERAL ===== */
+/* NOTA: havia dois blocos .container com max-width conflitantes (1200px e 1000px).
+   Unificados aqui com os valores do bloco principal. Se precisar de largura menor
+   em alguma página específica, crie uma classe auxiliar como .container-sm. */
 .container {
   width: 92%;
   max-width: 1200px;
@@ -108,11 +143,13 @@ nav ul li a.active {
 }
 
 /* ===== MAIN ===== */
+/* NOTA: havia um bloco `main { flex: 1; }` solto separado deste. Unificados. */
 main {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
+  flex: 1;
 }
 
 /* ===== TÍTULOS ===== */
@@ -302,6 +339,83 @@ table td:last-child {
   font-weight: 700;
 }
 
+/* ===== TABELA COMPARATIVA DEFASAGEM ===== */
+/* NOTA: este bloco aparecia 3 vezes no original. As duas últimas cópias
+   acrescentavam .linha-secao, .linha-total e .valor-unico. Tudo unificado aqui. */
+.tabela-comparativa-defasagem {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 15px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.tabela-comparativa-defasagem th,
+.tabela-comparativa-defasagem td {
+  padding: 12px 14px;
+  border: 1px solid #d9dee3;
+  text-align: center;
+}
+
+.tabela-comparativa-defasagem thead th {
+  background: #003366;
+  color: white;
+}
+
+.tabela-comparativa-defasagem td.destaque-sm {
+  background: #8B0000;
+  color: white;
+  font-weight: 700;
+  font-size: 1.05em;
+}
+
+.tabela-comparativa-defasagem tr.linha-secao td {
+  background: #003366;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+}
+
+.tabela-comparativa-defasagem tr.linha-total td {
+  background: #f0f4f8;
+  font-weight: 700;
+}
+
+.tabela-comparativa-defasagem tr.linha-total td.destaque-sm {
+  background: #8B0000;
+  color: white;
+}
+
+.tabela-comparativa-defasagem td.valor-unico {
+  font-weight: 500;
+}
+
+/* ===== TABELA SOLDO ===== */
+.tabela-soldo {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tabela-soldo th,
+.tabela-soldo td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.tabela-soldo th {
+  background-color: #0a3d62;
+  color: white;
+}
+
+.tabela-soldo tr:hover {
+  background-color: #f1f1f1;
+}
+
 /* ===== IFRAME ===== */
 iframe {
   width: 100%;
@@ -420,205 +534,8 @@ footer p {
   transform: scale(1.1);
 }
 
-/* ===== LINKS GERAIS ===== */
-a {
-  transition: 0.2s;
-}
-
-/* ===== RESPONSIVIDADE ===== */
-@media (max-width: 768px) {
-  header a {
-    font-size: 1.4em;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    text-align: center;
-    background: #1a73e8;
-    width: 100%;
-    padding: 10px 0;
-  }
-
-  nav ul.active {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
-
-  .container {
-    width: 95%;
-    padding: 20px;
-    margin: 25px auto;
-  }
-
-  main {
-    padding: 20px 15px;
-  }
-
-  .pagina-texto {
-    padding: 22px;
-    margin: 25px auto;
-  }
-
-  .atalhos-home {
-    gap: 16px;
-  }
-
-  .card-atalho {
-    padding: 20px;
-  }
-
-  input,
-  select {
-    max-width: 100%;
-  }
-
-  table {
-    font-size: 14px;
-  }
-
-  table th,
-  table td {
-    padding: 10px 12px;
-  }
-
-  iframe {
-    height: calc(100vh - 190px);
-  }
-}
-
-.container {
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 20px;
-}
-
-.data {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.tabela-soldo {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.tabela-soldo th,
-.tabela-soldo td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-.tabela-soldo th {
-    background-color: #0a3d62;
-    color: white;
-}
-
-.tabela-soldo tr:hover {
-    background-color: #f1f1f1;
-}
-.btn {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #0a84ff;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .box {
-      margin-bottom: 25px;
-    }
-    /* Dropdown */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #0a3d73;
-  border-radius: 8px;
-  min-width: 280px;
-  z-index: 1000;
-  white-space: nowrap;
-}
-
-.dropdown-menu li {
-  list-style: none;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 10px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.dropdown-menu a:hover {
-  background: #0a84ff;
-}
-
-/* Desktop (hover) */
-@media (min-width: 768px) {
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .dropdown-menu {
-    position: static;
-    background: #0a3d73;
-    display: none;
-  }
-
-  .dropdown.active .dropdown-menu {
-    display: block;
-  }
-}
-main {
-  flex: 1;
-}
 /* ===== SEPARADOR ===== */
-hr.separador {
-  border: none;
-  border-top: 1px solid #dfe5eb;
-  margin: 24px 0;
-}
-
-/* ===== AVISO DESTAQUE (transferência) ===== */
-.aviso-destaque {
-  background: #fff8e1;
-  border-left: 4px solid #f9a825;
-  border-radius: 8px;
-  padding: 14px 18px;
-  margin-bottom: 24px;
-  font-size: 15px;
-  color: #5f4000;
-}
-
-.aviso-destaque a {
-  color: #1a73e8;
-  font-weight: 600;
-  text-decoration: underline;
-}
-
-/* ===== SEPARADOR ===== */
+/* NOTA: aparecia duplicado no original. Mantida apenas uma ocorrência. */
 hr.separador {
   border: none;
   border-top: 1px solid #dfe5eb;
@@ -626,6 +543,7 @@ hr.separador {
 }
 
 /* ===== AVISO DESTAQUE ===== */
+/* NOTA: aparecia duplicado no original. Mantida apenas uma ocorrência. */
 .aviso-destaque {
   background: #fff8e1;
   border-left: 4px solid #f9a825;
@@ -640,6 +558,18 @@ hr.separador {
   color: #1a73e8;
   font-weight: 600;
   text-decoration: underline;
+}
+
+/* ===== RESUMO DEFASAGEM ===== */
+/* NOTA: aparecia duplicado no original (junto das cópias de .tabela-comparativa-defasagem). */
+.resumo-defasagem {
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #5f4000;
 }
 
 /* ===== CARDS DE EXPLICAÇÃO ===== */
@@ -699,19 +629,6 @@ hr.separador {
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-  .campo-com-dica {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .campo-com-dica select {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
 /* ===== FORMULÁRIO CENTRALIZADO ===== */
 .form-centralizado {
   max-width: 500px;
@@ -735,38 +652,221 @@ hr.separador {
 .form-centralizado .campo-com-dica select {
   flex: 1;
 }
-.tabela-comparativa-defasagem {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 15px;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-    }
-    .tabela-comparativa-defasagem th,
-    .tabela-comparativa-defasagem td {
-      padding: 12px 14px;
-      border: 1px solid #d9dee3;
-      text-align: center;
-    }
-    .tabela-comparativa-defasagem thead th {
-      background: #003366;
-      color: white;
-    }
-    .tabela-comparativa-defasagem td.destaque-sm {
-      background: #8B0000;
-      color: white;
-      font-weight: 700;
-      font-size: 1.05em;
-    }
-    .resumo-defasagem {
-      background: #fff8e1;
-      border-left: 4px solid #f9a825;
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-top: 20px;
-      font-size: 15px;
-      color: #5f4000;
-    }
+
+/* ===== DATA ===== */
+.data {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ===== BTN ===== */
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background: #0a84ff;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* ===== BOX ===== */
+.box {
+  margin-bottom: 25px;
+}
+
+/* ===== FICHA RÁPIDA ===== */
+.ficha-rapida {
+  background: #f0f4ff;
+  border-left: 4px solid #3b5bdb;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.ficha-rapida h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #3b5bdb;
+}
+
+.ficha-rapida ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.ficha-rapida li {
+  margin-bottom: 0.25rem;
+}
+
+/* ===== ALERTA HORAS ===== */
+.alerta-horas {
+  background: #fff0f0;
+  border: 1px solid #f03e3e;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.alerta-horas strong {
+  color: #c92a2a;
+}
+
+/* ===== ALERTA DIFERENÇA ===== */
+.alerta-diferenca {
+  background: #fff8e1;
+  border: 1px solid #f59f00;
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+}
+
+.alerta-diferenca strong {
+  color: #e67700;
+}
+
+/* ===== COMPARATIVO BOX ===== */
+.comparativo-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.comparativo-box .col {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.comparativo-box .col.destaque {
+  border-color: #3b5bdb;
+  background: #f8f9ff;
+}
+
+.comparativo-box .col h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #495057;
+}
+
+.comparativo-box .col.destaque h4 {
+  color: #3b5bdb;
+}
+
+.comparativo-box .col p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* ===== LINKS GERAIS ===== */
+a {
+  transition: 0.2s;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (min-width: 768px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  header a {
+    font-size: 1.4em;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    background: #1a73e8;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .dropdown-menu {
+    position: static;
+    background: #0a3d73;
+    display: none;
+  }
+
+  .dropdown.active .dropdown-menu {
+    display: block;
+  }
+
+  .container {
+    width: 95%;
+    padding: 20px;
+    margin: 25px auto;
+  }
+
+  main {
+    padding: 20px 15px;
+  }
+
+  .pagina-texto {
+    padding: 22px;
+    margin: 25px auto;
+  }
+
+  .atalhos-home {
+    gap: 16px;
+  }
+
+  .card-atalho {
+    padding: 20px;
+  }
+
+  input,
+  select {
+    max-width: 100%;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  table th,
+  table td {
+    padding: 10px 12px;
+  }
+
+  iframe {
+    height: calc(100vh - 190px);
+  }
+
+  .campo-com-dica {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .campo-com-dica select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .comparativo-box {
+    grid-template-columns: 1fr;
+  }
+}
