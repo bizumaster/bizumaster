@@ -31,6 +31,10 @@
   <section>
       <h2>Calculadora de transferência</h2>
 
+  Preencha os dados abaixo para estimar o valor total da sua transferência: ajuda de
+  custo, transporte de bagagem e dias de trânsito, calculados conforme a distância entre
+  origem e destino.
+
     <div id="formTransferencia" class="form-centralizado">
 
       <label for="patente">Patente:</label>
@@ -127,7 +131,34 @@
   </section>
 
   <section id="resultadoTransferencia" aria-live="polite">
-  </section>
+  
+    <section class="pagina-texto">
+
+<h2>De onde vem cada valor da sua transferência</h2>
+  <p>
+    O total exibido acima é a soma de dois componentes com lógicas bem diferentes.
+    
+    A ajuda de custo depende da sua remuneração e da sua situação familiar — ela pode
+    variar de 1x até 4x o valor de referência, dependendo se você tem dependente e se
+    a origem ou o destino é localidade especial. 
+    
+    Já o transporte de bagagem não tem relação nenhuma com o seu salário: ele é o produto 
+    da sua cubagem (definida pelo posto ou graduação) pelo valor por m³ da distância percorrida.
+  </p>
+
+  <p>
+    Um efeito prático dessa separação: dois militares do mesmo posto, na mesma
+    transferência, podem receber ajuda de custo bem diferente (um com dependente, outro
+    sem), mas o transporte de bagagem dos dois será idêntico, porque depende só da
+    cubagem do posto e da distância — não da situação familiar.
+  </p>
+  
+  <p>
+    Levar veículo também muda o resultado: a cubagem é acrescida em 12 m³ para
+    automóvel, 3 m³ para motocicleta ou 15 m³ para os dois juntos, o que aumenta
+    proporcionalmente o valor do transporte de bagagem, mas não afeta a ajuda de custo.
+  </p>
+</section>
 
 </main>
 
